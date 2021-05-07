@@ -1,0 +1,79 @@
+
+# 21st , 56th , 99th 
+quantile(salary$ba,probs = 0.99)
+quantile(salary$ba,probs = c(0.21,0.56,0.99))
+quantile(salary$ba)
+
+#find quantiles from 1 to 100 with diff of 10 
+-using seq function
+quantile(salary$ba,probs=seq(0.1,1.0,0.1))
+
+#fetch the first 5 rows information for grade and ba only 
+sub2<-salary[1:5,c(3,6)];sub2
+sub2<-salary[1:5,c("Grade","ba")];sub2
+
+# head , tail 
+head(salary)# default it will print first 6 rows 
+tail(salary)# default it will print last 6 rows
+
+head(salary,25)
+tail(salary,5)
+
+
+# fetch the rows having grade value = GR1
+# condition based subsetting 
+sub3<-subset(salary, salary$Grade=="GR1");sub3
+# fetch the rows having ba <20000
+
+#fetch the rows having grade =grade 2 and ms > 10000
+sub5 <-subset(salary,salary$Grade=="GR2" & salary$ms>10000);sub5
+
+#fetch the rows having location mumbai and BA>12000 AND function technical or sales
+sub6<-subset(salary,salary$Location=="MUMBAI" & salary$ba>12000 & 
+               (salary$Function=="TECHNICAL"|salary$Function=="SALES"));sub6
+
+**AGGREGATE-
+#find mean of ba wrt grade
+aggr<-aggregate(ba~Grade,data = salary,FUN = mean);aggr
+
+# find the sd of ba wrt location and function
+-COMMON METHOD
+s1<-subset(salary,salary$Location=="MUMBAI" & salary$Function=="TECHNICAL")
+s2<-subset(salary,salary$Location=="MUMBAI" & salary$Function=="SALES")
+s3<-subset(salary,salary$Location=="MUMBAI" & salary$Function=="FINANCE")
+s4<-subset(salary,salary$Location=="DELHI" & salary$Function=="TECHNICAL")
+s5<-subset(salary,salary$Location=="DELHI" & salary$Function=="SALES")
+s6<-subset(salary,salary$Location=="DELHI" & salary$Function=="FINANCE")
+sd(s1$ba)
+sd(s2$ba)
+sd(s3$ba)
+sd(s4$ba)
+sd(s5$ba)
+sd(s6$ba)
+-AGREGATE METHOD
+aggr2<-aggregate(ba~Location+Function,data = salary,FUN=sd);aggr2
+# find the sd of ba wrt location and function and grade 
+L= 2 , F= 3 , G=2 = 2*3*2 = 12 
+aggr3<-aggregate(ba~Location+Function+Grade,data = salary,FUN=sd);aggr3
+#  find the sd of ba and ms wrt location and function and grade
+-TRADITIONAL METHOD
+aggr4<-aggregate(ba~Location+Function+Grade,data = salary,FUN=sd);aggr4
+aggr4<-aggregate(ms~Location+Function+Grade,data = salary,FUN=sd);aggr4
+**cbind METHOD 
+# cbind = column bind : when we want to implement same set of operation 
+on multiple columns we use cbind 
+aggr4<-aggregate(cbind(ba,ms)~Location+Function+Grade,data = salary,FUN=sd);aggr4
+
+#order function : sorting of data 
+# arrange the data in ascending order of ba 
+ord1<-salary[order(salary$ba),];ord1
+# arrage the data in asc order of grade 
+ord2 <- salary[order(salary$Grade),]; ord2
+# arrange the data in decending order of ba 
+ord2<-salary[order(salary$ba,decreasing = T),];ord2
+ord4<-salary[order(salary$Grade,decreasing = T),]
+head(ord4,25)......#25 means first 25 points.
+
+
+
+          	

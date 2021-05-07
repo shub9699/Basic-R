@@ -1,0 +1,65 @@
+# order the data according to grade and ba- 
+ord5<-salary[order(salary$Grade,salary$ba),]
+ord5
+# order the data according to decreasing order of location and ms- 
+ord7<-salary[order(salary$Location,salary$ms,decreasing = T),]
+# order the data according to grade location and ba- 
+ord8<-salary[order(salary$Grade,salary$Location,salary$ba),]
+ord8
+#order data acc to grade in inc order and ba in decreasing order-
+ord9<-salary[order(salary$Grade,-salary$ba),];
+ord9
+NOTE- "-" sign only works for numeric values and not for factors.
+      - decreasing=T , works for num and factor/char variable.
+
+MERGE/JOIN
+#create dataset using variables.
+empid<-c(1,2,3,4,6)
+ename<-c("A","B","C","D","E")
+esal<-c(23,45,67,87,89)
+emp<-data.frame(empid,ename,esal)
+
+empid<-c(1,2,3,5,7)
+ebonus<-c(12,12,10,9,8)
+bonus<-data.frame(empid,ebonus)
+# innermerge 
+# (1,2,3,4,6) , (1,2,3,5,7) ; intersection = 1,2,3
+# union= 1,2,3,4,5,6,7
+innermerge<-merge(emp,bonus,by="empid");innermerge
+
+# right merge : complete right table with matching left entries.
+rightmerge<-merge(emp,bonus,by="empid",all.y = T);rightmerge 
+
+#left merge: complete left table with matching right entries.
+leftmerge<-merge(emp,bonus,by="empid",all.x = T);leftmerge
+# x = left table , y= right table 
+
+#outerMerge union = 1,2,3,4,5,6,7
+outermerge<-merge(emp,bonus,by="empid",all = T);outermerge
+
+rbind (), appneding data 
+empid<-c(1,2,3,4)
+ename<-c("A","B","C","D")
+emp1<-data.frame(empid,ename)
+
+empid<-c(5,6,7,8)
+ename<-c("P","Q","R","T")
+emp2<-data.frame(empid,ename)
+
+emp1
+emp2
+emp3<-rbind(emp1,emp2)
+emp3
+NOTE- the tables for rbind must have same NO of columns 
+      the tables in rbind MUST have same COLUMN NAME
+      multiple number of tables can be bind satsifying the above 2 condtitons 
+
+# boxplot : To Find outliers present in the data 
+boxplot(salary$ba)
+IQR(salary$ba)
+summary(salary$ba)
+UW<- 19250 + 1.5*(5590)
+LW<- 13660 - 1.5 *(5590)
+UW
+LW
+ 
