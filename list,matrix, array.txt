@@ -1,0 +1,43 @@
+**list-one dimension heterogenous function.
+list1<-list(12L,50,"data",T,3+8i)
+list1
+class(list1[[1]])
+class(list1[[2]])
+class(list1[[3]])
+class(list1[[4]])
+class(list1[[5]])
+
+list1<-list(12L,50,"data",T,3+8i)
+list2<-list(45L,76,"science",F,2+7i)
+list3<-list(list1,list2)
+list3
+#using concatination c
+list4<-c(list1,list2)
+list4
+list3[[1]][[3]]
+list4[[10]]
+
+#insert the element at the 1,6 th position of the list 3 as "hi"
+list3[[1]][[6]]<-"hi"
+# insert the element "hi" at the 11th position of list 4
+list4[[11]]<-"hi"
+# to remove an element we need to write NULL
+list4[[11]]<-NULL
+list4
+
+**matrix: 2 dimensional homogenous structure
+mat1<-matrix(1:9, nrow = 3, ncol = 3); mat1
+mat2<-matrix(1:9, nrow = 3, ncol = 3, byrow = T); mat2
+mat1[1,1] #to fetch index wise
+mat2[2,3]
+#to convert vector into matrix.
+vect1<-c(1,2,3,4,5,6,7,8,9)
+mat3<-matrix(vect1, nrow = 3, ncol = 3, byrow = T); mat3
+
+**array: n dimensional 
+ar1<- array(1:9, c(3,3,1));ar1
+#array with 9 elements of 3*3 twice as dimension given is 2.
+ar2<- array(10:18, c(3,3,2)); ar2
+ar2[,,2]
+ar1[,2,]
+

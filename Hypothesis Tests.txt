@@ -1,0 +1,47 @@
+# hypothesis testing - @ONE SAMPLE t TEST.cvs
+# import the data 
+
+# null hypothesis : the time taken by emp to complete MIS report is mu = 90 min
+# alt hypothesis : the time taken by emp to complete MIS report is greater than 90 mins 
+
+# single sample t test : one sample :  avg of that sample with one value [90]
+
+t.test(one_sample$Time,mu=90,alternative = "greater" )
+
+
+# p value : prob of making type 1 error if we reject null hypothesis
+# p < 0.05 we can safely reject null hypo 
+# p = or > 0.05 , it is not safe to reject ho ; accept ho 
+
+# p=0.02 : out of 100 cases in 2 cases if we reject ho[decision] ; ho is True [actual] 
+ # it is safe to reject null hypothesis 
+#the prob of making type 1 error is 2% if we reject Ho.
+
+# p =0.8 : out of 100 times , 80 time when we reject ho [D]; ho is true [actual]
+ # it is not safe to reject null hypothesis , accept ho
+#the prob of making type 1 error is 80% if we reject Ho.
+
+# p =0.5 : out of 100 times , 50 times when we reject ho [D]; ho is true[actual]
+ # it is not safe to reject null hypotheis ; accept to ho 
+#the prob of making type 1 error is 50% if we reject Ho.
+
+#in our case 0.04<0.5 so it is safe to reject Ho
+
+
+***independent sample t test 
+# samples are mutually exclusive 
+# samples are derived from the same population 
+# we can comp. mean of  only 2 samples at a time 
+
+# null hypo : mean of sample 1 and sample 2 is SIMILAR 
+#           : diff in mean of sample 1 and sample 2 is similar to 0 
+
+# alt hypo : mean of sample 1 and sample 2 is not similar 
+#          : diff in mean of sample 1 and sample 2 is not similar to 0 
+
+t.test(INDEPENDENT.SAMPLES.t.TEST$time_g1,INDEPENDENT.SAMPLES.t.TEST$time_g2,
+       alternative = "two.sided")
+#p=0.828 ie. 0.828>0.5 so we will accept Ho.
+
+#for independent t test_2 dataset
+t.test(time~group,data = ind_2,alternative="two.sided")
