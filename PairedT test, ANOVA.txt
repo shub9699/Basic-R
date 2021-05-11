@@ -1,0 +1,53 @@
+**paired T test/dependent sample t test:-
+
+# null hypo : time required to compute MIS before and after is similar 
+# : diff in time taken to compute MIS before and after is similar to 0
+
+# alt hypo : time required to compute MIS before and after is not similar 
+# alt hypo : diff in avg time to complete MIS report is not 0 
+
+# : diff in average is greater than 0 
+# : diff in average is less than 0 
+t.test(paired_t$time_before,paired_t$time_after,alternative = "greater",paired = T)
+
+#p : 4.91e-07 : reject ho 
+
+# mean of diff : 8.333333  
+# training was effective 
+
+# score in exam before and after training 
+t.test(paired_t$time_before,paired_t$time_after,alternative = "greater",paired = T)
+
+**Test for variance OR F test:-
+# null : the variance in both the samples is similar 
+#      : diff in variance for both the sample is 0 
+
+# alt : the variance in samples is not similar 
+#     : diff in variance is not equal to 0 
+
+# variance test is two tailed 
+var.test(time~group , data=var_sample, alternative="two.sided")
+
+# F = var1/var2= 1.5434 
+# p =0.45 >0.05 : accepting null hypo 
+
+ Q. what is the relation between f value and p value ?[ direct / inverse]
+# less is p value : reject null : var are diff 
+# high p value : accept null : var are similar 
+
+# f value high indicates the ratio  of var is high - sample are diff : reject hnull
+# f value small : ratio of var is small - samples are similar : accept null
+
+# null hypo : high p value and low f value 
+# null hypo : rejected : low p value and high f value 
+# p and f are inversly related 
+
+
+**ANOVA
+--note : anova uses long type data ONLY 
+# null hypo : all dept have similar satindex
+# alt hypo  : all dept have diff satindex
+
+one_way_anova<-aov(satindex~dept,data = one_way)
+summary(one_way_anova)
+#p = 0.115 > 0.05 : accepting null 
