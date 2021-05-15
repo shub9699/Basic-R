@@ -1,0 +1,73 @@
+**Two way anova
+#we have 2 factors each of n levels
+#Ho: satindex is similar across all dept and exp
+#Ho: satindex is similar across all dept
+#Ho: satindex is similar across all exp
+#Ha: !Ho
+
+two_way_anova<-aov(satindex~dept+exp, data=two_way)
+summary(two_way_anova)
+
+#dept: 0.187>0.05 : accepct Ho1
+#exp: 0.204>0.05 : accept H01
+#cross product/interaction plot:- it is done when we get any one p value below or above threshold
+so we take cross product of the two categorical variables.
+TwoWayCross<-aov(satindex~dept+exp+dep*exp, data=two_way)
+summary(TwoWayAnova) "the 3rd P value will give the interaction P value"
+
+**Cor test: test for correlation
+#cor value gives you the strenght of cor
+#cor test gives you significance of cor
+#cor test needs the columns must be numerical
+
+#Ho: the cor value of both columns is similar to 0 (means no correlation)
+#Ha: the cor value of both columns is not similar to 0 (means there is a correlation)
+cor.test(JOBPROF$aptitude,JOBPROF$job_prof)0
+#P: 0.0085 < 0.05 : reject Ho : exist correlation
+
+
+Practise: using diabetes.csv dataframe
+Q1. avg value of glucose is similar to 125
+->using single sample t test
+t.test(diabetes$Glucose, mu=125, alternative= "two.sided")
+p: 0.00039 < 0.05 : reject Ho
+
+Q2. check if avg bmi is similar across all possible outcomes
+-> diabetes$Outcomes<-as.factor(diabetes$outcomes)
+using Independent sample t test OR one way anova
+t.test(BMI~Outcome, data = diabetes)
+p: 2.2e-16 < 0.05 : reject Ho
+-> for ANOVA
+a<- aov(BMI~Outcome, data= diabetes)
+summary(a)
+p: <2e-16 < 0.05 : reject Ho
+
+Q3. check if there is significant correlation betwn bloodpressure and skin thickness
+->  cor.test(diabetes$BloodPressure,diabetes$Skinthickness)
+p: 6.6e-09 < 0.05 : reject Ho: cor in BP and ST
+
+Q4. check if the variance in BMI is significant wrt outcome
+-> var.test(BMI~Outcome, data=diabetes)
+p: 0.29 > 0.05 : accept Ho
+
+**using inbuilt R "iris" dataset
+Q. check if the petal lenght is significant diff for all species or not?
+->#given lenght(numerical), species(factor with 3 levels)
+Using one way anova,
+OneWayAnova<- aov(Petal.Lenght~Species,data = iris)
+summary(OneWayanova)
+p: <2e-16 <<< 0.05 : reject Ho, ie. the petal lenght are diff for 
+different kind of species 
+
+**predictive analysis
+**test for normality(shapiro test)
+Ho: data is ND
+Ha: data is not ND
+shapiro.test(one_sample$Time)
+p: 0.3448 > 0.05 : accept Ho : data is ND
+ 
+
+
+
+ 
+
