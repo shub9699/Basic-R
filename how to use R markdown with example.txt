@@ -1,0 +1,84 @@
+#R markdown is used to generate a report and publish our
+work on sites like Rpubs and kaggle
+
+#To do LR in Rmarkdown
+#file name Linear Regression on insurance.csv
+
+#create new chunk to import the file
+```{r load file}
+insurance<-read.csv("insurance.csv file destination")
+summary(insurance)
+str(insurance)
+
+```
+
+```{r EDA}
+names(insurance)
+boxplot(charges~smoker, data=insurance)
+# charges for smoker is higher than non smokers
+boxplot(charges~region, data=insurance)
+#plot the correlation of numerical variables 
+library(corrplot)
+num_var<-insurance[,c("age","bmi","charges")]
+cor_mat<-cor(num_var); cor_mat
+corrplot(cor_mat)
+
+#check for missing values
+colSums(is.na(insurance))
+
+#check for outliers
+summary(insurance$charges)
+IQR(insurance$charges)
+UW<-1664+1.5(11899); UW
+
+#subset of non outliers observations
+insurance1<-subset(insurance, insurance$charges<=UW)
+nrow(insurance)
+nrow(insurance1)
+```
+
+create training and testing partitions using sample function for
+cross validaition
+```{r data_partition}
+index<-sample(nrow(insurance1),0.75*(nrow(insurance1)))
+training_insurance<-insurance1[index,]
+testing_insurance<-insurance1[-index,]
+dim(training_insurance)
+dim(testing_insurance)
+```
+
+generate model
+```{r lm_model}
+insurance_model<-lm(charges~., data=training_insurance)
+summary(insurance_model)
+#stepwise regression process
+null_insurance<-lm(charges~1, data=training_insurance)
+step(null_insurance, direction="forward", scope = list(lower=null_insurance, 
+upper=insurance_model))
+insurance_model_rev<-lm(formula=charges~smoker+age+childern+region+bmi
++sex, data=training_insurance)
+
+library(car)
+#check for multicolinearity
+vif(insurance_model_rev)
+#model is free from multicolinearity as al vif are less than 5
+durbinWatsonTest(insurance_model_rev)
+#p-value = 0.67 > 0.05: accept ho; the model is not having autocorrelation
+
+```
+
+model is free from multicolinearity and from autocorrelation
+
+```{r predicition}
+training_insurance$pred_charges<-predict(insurance_model_rev, training_insurance)
+training_insurance$res<-training_insurance$charges - training_insurance$pred_charges
+rmse_training_insurance<-sqrt(mean(training_insurance$res^2))
+rmse_training_insurance
+
+testing_insurance$pred_charge<-predict(insurance_model_rev, testing_insurance)
+testing_insurance$res<-testing_insurance$charges - testing_insurance$pred_charges
+rmse_testing_insurance<-sqrt(mean(testing_insurance$res^2))
+rmse_testing_insurance
+```
+
+knit in word.
